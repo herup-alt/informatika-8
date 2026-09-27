@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFORMATIKA CERDAS - KELAS VIII | SMP BINA BANGSA MANDIRI</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                        },
+                        purpleBrand: '#6366f1',
+                        emeraldBrand: '#10b981',
+                        amberBrand: '#f59e0b'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js for Data Analysis Module -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        .pulse-card {
+            animation: pulse-slow 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- TOP NAVIGATION HEADER -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <!-- Logo & School Info -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('beranda')">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center text-white shadow-md shadow-indigo-200">
+                        <i class="fa-solid fa-laptop-code text-xl sm:text-2xl"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="font-extrabold text-lg sm:text-xl text-slate-900 tracking-tight">INFORMATIKA CERDAS</span>
+                            <span class="bg-indigo-100 text-indigo-700 text-xs font-bold px-2 py-0.5 rounded-full border border-indigo-200">KELAS VIII</span>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium">SMP BINA BANGSA MANDIRI &bull; Kurikulum Merdeka</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden lg:flex items-center space-x-1 font-medium text-sm">
+                    <button onclick="switchTab('beranda')" id="nav-beranda" class="nav-btn px-3 py-2 rounded-xl text-indigo-600 bg-indigo-50 font-semibold transition">
+                        <i class="fa-solid fa-house mr-1.5"></i>Beranda
+                    </button>
+                    <button onclick="switchTab('materi')" id="nav-materi" class="nav-btn px-3 py-2 rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-slate-100 transition">
+                        <i class="fa-solid fa-book-open mr-1.5"></i>Materi Bab
+                    </button>
+                    <button onclick="switchTab('simulasi')" id="nav-simulasi" class="nav-btn px-3 py-2 rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-slate-100 transition">
+                        <i class="fa-solid fa-flask mr-1.5"></i>Lab Interaktif
+                    </button>
+                    <button onclick="switchTab('game')" id="nav-game" class="nav-btn px-3 py-2 rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-slate-100 transition">
+                        <i class="fa-solid fa-gamepad mr-1.5 text-amber-500"></i>Game
+                    </button>
+                    <button onclick="switchTab('kuis')" id="nav-kuis" class="nav-btn px-3 py-2 rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-slate-100 transition">
+                        <i class="fa-solid fa-circle-question mr-1.5 text-emerald-600"></i>Kuis & Evaluasi
+                    </button>
+                    <button onclick="switchTab('proyek')" id="nav-proyek" class="nav-btn px-3 py-2 rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-slate-100 transition">
+                        <i class="fa-solid fa-list-check mr-1.5"></i>Proyek & Refleksi
+                    </button>
+                </nav>
+
+                <!-- Student Profile / Teacher Info Quick Badge -->
+                <div class="hidden sm:flex items-center space-x-3">
+                    <button onclick="switchTab('profil')" class="flex items-center space-x-2 bg-slate-100 hover:bg-slate-200 border border-slate-200 px-3 py-1.5 rounded-xl transition">
+                        <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs">
+                            HP
+                        </div>
+                        <div class="text-left">
+                            <p class="text-xs font-bold text-slate-800">Drs. H. HERU PRABOWO</p>
+                            <p class="text-[10px] text-slate-500">Guru Pengampu</p>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="flex lg:hidden items-center">
+                    <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="p-2 rounded-xl text-slate-600 hover:bg-slate-100 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-4 space-y-2">
+            <button onclick="switchTab('beranda')" class="w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 flex items-center font-medium">
+                <i class="fa-solid fa-house w-6"></i> Beranda
+            </button>
+            <button onclick="switchTab('materi')" class="w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 flex items-center font-medium">
+                <i class="fa-solid fa-book-open w-6"></i> Materi Pembelajaran
+            </button>
+            <button onclick="switchTab('simulasi')" class="w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 flex items-center font-medium">
+                <i class="fa-solid fa-flask w-6"></i> Laboratorium Interaktif
+            </button>
+            <button onclick="switchTab('game')" class="w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 flex items-center font-medium">
+                <i class="fa-solid fa-gamepad w-6 text-amber-500"></i> Game Edukasi
+            </button>
+            <button onclick="switchTab('kuis')" class="w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 flex items-center font-medium">
+                <i class="fa-solid fa-circle-question w-6 text-emerald-600"></i> Kuis & Evaluasi Akhir
+            </button>
+            <button onclick="switchTab('proyek')" class="w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 flex items-center font-medium">
+                <i class="fa-solid fa-list-check w-6"></i> Proyek & Refleksi
+            </button>
+            <button onclick="switchTab('profil')" class="w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 flex items-center font-medium">
+                <i class="fa-solid fa-user-tie w-6"></i> Profil Guru & Sekolah
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow">
+
+        <!-- ==================== TAB 1: BERANDA / DASHBOARD ==================== -->
+        <section id="tab-beranda" class="tab-content space-y-8">
+            <!-- Welcome Hero Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-700 via-blue-600 to-sky-500 text-white p-6 sm:p-10 shadow-xl">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-white text-9xl font-black pointer-events-none select-none">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+                <div class="relative z-10 max-w-2xl space-y-4">
+                    <div class="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold">
+                        <span>✨ Selamat Datang di Portal Pembelajaran Interaktif</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+                        Siap Menjadi Generasi <span class="text-amber-300">Informatika Cerdas</span>?
+                    </h1>
+                    <p class="text-indigo-100 text-sm sm:text-base leading-relaxed">
+                        Selamat datang siswa Kelas VIII SMP BINA BANGSA MANDIRI! Mari jelajahi dunia logika berpikir komputasional, rahasia jaringan internet, dan keajaiban analisis data bersama Bpk. Drs. H. HERU PRABOWO.
+                    </p>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <button onclick="switchTab('materi')" class="bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold px-6 py-3 rounded-xl shadow-lg hover:shadow-amber-400/30 transition duration-200 flex items-center space-x-2">
+                            <span>Mulai Belajar</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <button onclick="switchTab('game')" class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-semibold px-5 py-3 rounded-xl transition flex items-center space-x-2">
+                            <i class="fa-solid fa-gamepad text-amber-300"></i>
+                            <span>Main Mini Game</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Progress Dashboard Card -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">Progres Bab 2</p>
+                        <h4 class="text-lg font-bold text-slate-800" id="progress-bab2-text">0% Selesai</h4>
+                        <div class="w-28 bg-slate-100 h-2 rounded-full mt-1.5 overflow-hidden">
+                            <div id="progress-bab2-bar" class="bg-blue-600 h-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">Progres Bab 3</p>
+                        <h4 class="text-lg font-bold text-slate-800" id="progress-bab3-text">0% Selesai</h4>
+                        <div class="w-28 bg-slate-100 h-2 rounded-full mt-1.5 overflow-hidden">
+                            <div id="progress-bab3-bar" class="bg-purple-600 h-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">Progres Bab 4</p>
+                        <h4 class="text-lg font-bold text-slate-800" id="progress-bab4-text">0% Selesai</h4>
+                        <div class="w-28 bg-slate-100 h-2 rounded-full mt-1.5 overflow-hidden">
+                            <div id="progress-bab4-bar" class="bg-emerald-600 h-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">Total Skor Kuis</p>
+                        <h4 class="text-lg font-bold text-slate-800" id="total-score-text">0 / 300</h4>
+                        <span class="text-[11px] text-amber-600 font-medium"><i class="fa-solid fa-star mr-1"></i>Peringkat Cerdas</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter Overview Cards Grid -->
+            <div>
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-bold text-slate-900">Materi Pembelajaran Kurikulum Merdeka</h2>
+                    <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">Kelas 8 Semester 1 & 2</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Bab 2 Card -->
+                    <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl font-bold">
+                                02
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900">Bab 2: Berpikir Komputasional</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Pelajari penerapan logika, dekomposisi, pola, dan struktur data penting seperti **Stack (Tumpukan)** dan **Queue (Antrean)**.
+                            </p>
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-xs text-slate-500 font-medium"><i class="fa-solid fa-layer-group mr-1"></i>3 Sub-materi</span>
+                            <button onclick="openChapter('bab2')" class="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center space-x-1">
+                                <span>Pelajari</span>
+                                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Bab 3 Card -->
+                    <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl font-bold">
+                                03
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900">Bab 3: Jaringan Komputer & Internet</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Temukan cara perangkat saling terkoneksi, beda Internet & Intranet, serta cara menjaga **Keamanan Data & Enkripsi**.
+                            </p>
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-xs text-slate-500 font-medium"><i class="fa-solid fa-wifi mr-1"></i>3 Sub-materi</span>
+                            <button onclick="openChapter('bab3')" class="text-xs font-bold text-purple-600 hover:text-purple-700 flex items-center space-x-1">
+                                <span>Pelajari</span>
+                                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Bab 4 Card -->
+                    <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl font-bold">
+                                04
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900">Bab 4: Analisis Data</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Kuasai pengolahan data, pembuatan grafik/visualisasi interaktif, hingga **interpretasi data** untuk mengambil kesimpulan cerdas.
+                            </p>
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-xs text-slate-500 font-medium"><i class="fa-solid fa-chart-line mr-1"></i>3 Sub-materi</span>
+                            <button onclick="openChapter('bab4')" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center space-x-1">
+                                <span>Pelajari</span>
+                                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Teacher Profile Banner -->
+            <div class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white p-6 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-2xl font-black text-slate-900 shadow-md">
+                        HP
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Guru Pengampu Mata Pelajaran</span>
+                        <h3 class="text-xl font-extrabold">Drs. H. HERU PRABOWO</h3>
+                        <p class="text-xs text-slate-300 mt-0.5">SMP BINA BANGSA MANDIRI &bull; "Informatika adalah kunci masa depan cerdasmu."</p>
+                    </div>
+                </div>
+                <button onclick="switchTab('profil')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-5 py-3 rounded-xl transition whitespace-nowrap">
+                    Lihat Profil & Identitas Sekolah
+                </button>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 2: MATERI PEMBELAJARAN ==================== -->
+        <section id="tab-materi" class="tab-content hidden space-y-8">
+            <!-- Chapter Selector Navigation Bar -->
+            <div class="flex overflow-x-auto space-x-2 border-b border-slate-200 pb-2 custom-scrollbar">
+                <button onclick="showChapterTab('bab2')" id="btn-tab-bab2" class="chapter-tab-btn px-5 py-2.5 rounded-xl text-sm font-bold bg-indigo-600 text-white whitespace-nowrap shadow-sm">
+                    Bab 2: Berpikir Komputasional
+                </button>
+                <button onclick="showChapterTab('bab3')" id="btn-tab-bab3" class="chapter-tab-btn px-5 py-2.5 rounded-xl text-sm font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap">
+                    Bab 3: Jaringan Komputer & Internet
+                </button>
+                <button onclick="showChapterTab('bab4')" id="btn-tab-bab4" class="chapter-tab-btn px-5 py-2.5 rounded-xl text-sm font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap">
+                    Bab 4: Analisis Data
+                </button>
+            </div>
+
+            <!-- CHAPTER 2 CONTENT -->
+            <div id="content-bab2" class="chapter-content space-y-6">
+                <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                        <div>
+                            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">Bab 2 &bull; Informatika Kelas VIII</span>
+                            <h2 class="text-2xl font-extrabold text-slate-900 mt-2">Berpikir Komputasional (Computational Thinking)</h2>
+                        </div>
+                        <button onclick="markChapterDone('bab2')" class="text-xs font-bold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-4 py-2 rounded-xl transition">
+                            <i class="fa-solid fa-check-circle mr-1"></i> Tandai Selesai
+                        </button>
+                    </div>
+
+                    <!-- 4 Pilar BK -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-slate-800 flex items-center">
+                            <i class="fa-solid fa-cubes text-blue-600 mr-2"></i> 1. Empat Pilar Berpikir Komputasional
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                                <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold mb-2 text-xs">1</div>
+                                <h4 class="font-bold text-sm text-slate-800">Dekomposisi</h4>
+                                <p class="text-xs text-slate-600 mt-1">Memecah masalah besar dan kompleks menjadi bagian-bagian kecil yang lebih mudah dikelola.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                                <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold mb-2 text-xs">2</div>
+                                <h4 class="font-bold text-sm text-slate-800">Pengenalan Pola</h4>
+                                <p class="text-xs text-slate-600 mt-1">Mencari kesamaan atau pola dari masalah-masalah yang pernah diselesaikan sebelumnya.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                                <div class="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center font-bold mb-2 text-xs">3</div>
+                                <h4 class="font-bold text-sm text-slate-800">Abstraksi</h4>
+                                <p class="text-xs text-slate-600 mt-1">Fokus pada informasi yang penting saja dan mengabaikan detail yang tidak relevan.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold mb-2 text-xs">4</div>
+                                <h4 class="font-bold text-sm text-slate-800">Algoritma</h4>
+                                <p class="text-xs text-slate-600 mt-1">Menyusun langkah-langkah logis dan terurut untuk menyelesaikan suatu masalah.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Struktur Data: Stack & Queue -->
+                    <div class="space-y-4 pt-4 border-t border-slate-100">
+                        <h3 class="text-lg font-bold text-slate-800 flex items-center">
+                            <i class="fa-solid fa-layer-group text-blue-600 mr-2"></i> 2. Penerapan Struktur Data: Stack & Queue
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Stack Explanation -->
+                            <div class="bg-blue-50/60 p-5 rounded-2xl border border-blue-100 space-y-3">
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-blue-600 text-white text-xs font-bold px-2 py-0.5 rounded-md">LIFO</span>
+                                    <h4 class="font-bold text-slate-900">Stack (Tumpukan)</h4>
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    Prinsip **LIFO (Last In, First Out)**: Elemen yang *terakhir dimasukkan* akan menjadi elemen *pertama yang dikeluarkan*.
+                                </p>
+                                <div class="bg-white p-3 rounded-xl border border-blue-200 text-xs text-slate-700">
+                                    <strong>Contoh Kehidupan Nyata:</strong> Tumpukan piring di kantin SMP, atau fitur **Undo (Ctrl+Z)** pada aplikasi Microsoft Word.
+                                </div>
+                            </div>
+
+                            <!-- Queue Explanation -->
+                            <div class="bg-indigo-50/60 p-5 rounded-2xl border border-indigo-100 space-y-3">
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-indigo-600 text-white text-xs font-bold px-2 py-0.5 rounded-md">FIFO</span>
+                                    <h4 class="font-bold text-slate-900">Queue (Antrean)</h4>
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    Prinsip **FIFO (First In, First Out)**: Elemen yang *pertama kali masuk* akan menjadi yang *pertama dikeluarkan*.
+                                </p>
+                                <div class="bg-white p-3 rounded-xl border border-indigo-200 text-xs text-slate-700">
+                                    <strong>Contoh Kehidupan Nyata:</strong> Antrean membeli bakso di kantin sekolah, atau antrean cetak dokumen pada printer.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Direct Simulation Link -->
+                    <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-5 rounded-2xl flex items-center justify-between">
+                        <div>
+                            <h4 class="font-bold text-sm">Ingin Mencoba Simulasi Stack & Queue?</h4>
+                            <p class="text-xs text-blue-100">Coba sendiri penambahan (Push/Enqueue) dan penghapusan data secara visual!</p>
+                        </div>
+                        <button onclick="switchTab('simulasi')" class="bg-white text-blue-600 font-bold text-xs px-4 py-2.5 rounded-xl hover:bg-blue-50 transition whitespace-nowrap">
+                            Buka Simulasi <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHAPTER 3 CONTENT -->
+            <div id="content-bab3" class="chapter-content hidden space-y-6">
+                <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                        <div>
+                            <span class="text-xs font-bold text-purple-600 bg-purple-50 px-3 py-1 rounded-full">Bab 3 &bull; Informatika Kelas VIII</span>
+                            <h2 class="text-2xl font-extrabold text-slate-900 mt-2">Jaringan Komputer dan Internet</h2>
+                        </div>
+                        <button onclick="markChapterDone('bab3')" class="text-xs font-bold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-4 py-2 rounded-xl transition">
+                            <i class="fa-solid fa-check-circle mr-1"></i> Tandai Selesai
+                        </button>
+                    </div>
+
+                    <!-- Internet vs Intranet -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-purple-50/70 p-5 rounded-2xl border border-purple-100 space-y-2">
+                            <h3 class="font-bold text-purple-900 flex items-center">
+                                <i class="fa-solid fa-globe text-purple-600 mr-2"></i> Internet (Interconnected Network)
+                            </h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Jaringan komputer global berskala dunia yang menghubungkan jutaan komputer di seluruh bumi secara publik menggunakan protokol standar IP/TCP.
+                            </p>
+                        </div>
+                        <div class="bg-indigo-50/70 p-5 rounded-2xl border border-indigo-100 space-y-2">
+                            <h3 class="font-bold text-indigo-900 flex items-center">
+                                <i class="fa-solid fa-building-user text-indigo-600 mr-2"></i> Intranet (Internal Network)
+                            </h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Jaringan komputer privat terlindung yang hanya dapat diakses oleh anggota organisasi tertentu (misalnya jaringan LAN di lab sekolah SMP BINA BANGSA MANDIRI).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Keamanan Data & Encrypt -->
+                    <div class="space-y-4 pt-4 border-t border-slate-100">
+                        <h3 class="text-lg font-bold text-slate-800 flex items-center">
+                            <i class="fa-solid fa-shield-halved text-purple-600 mr-2"></i> Keamanan Data di Dunia Digital
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                                <i class="fa-solid fa-key text-amber-500 text-xl"></i>
+                                <h4 class="font-bold text-sm text-slate-800">Enkripsi Data</h4>
+                                <p class="text-xs text-slate-600">Proses mengacak data asli (plaintext) menjadi kode rahasia (ciphertext) agar tidak bisa dibaca oleh peretas.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                                <i class="fa-solid fa-fish-fins text-rose-500 text-xl"></i>
+                                <h4 class="font-bold text-sm text-slate-800">Waspada Phishing</h4>
+                                <p class="text-xs text-slate-600">Kejahatan penipuan melalui tautan/situs web palsu yang menyamar untuk mencuri kata sandi milikmu.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                                <i class="fa-solid fa-lock text-emerald-500 text-xl"></i>
+                                <h4 class="font-bold text-sm text-slate-800">HTTPS & SSL</h4>
+                                <p class="text-xs text-slate-600">Situs web aman ditandai dengan ikon gembok dan awalan `https://` yang menjamin koneksi terenkripsi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHAPTER 4 CONTENT -->
+            <div id="content-bab4" class="chapter-content hidden space-y-6">
+                <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                        <div>
+                            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">Bab 4 &bull; Informatika Kelas VIII</span>
+                            <h2 class="text-2xl font-extrabold text-slate-900 mt-2">Analisis Data dan Visualisasi</h2>
+                        </div>
+                        <button onclick="markChapterDone('bab4')" class="text-xs font-bold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-4 py-2 rounded-xl transition">
+                            <i class="fa-solid fa-check-circle mr-1"></i> Tandai Selesai
+                        </button>
+                    </div>
+
+                    <!-- Steps of Data Analysis -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-slate-800 flex items-center">
+                            <i class="fa-solid fa-chart-simple text-emerald-600 mr-2"></i> Tahapan Pengolahan Data
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-100 space-y-2">
+                                <div class="text-xs font-extrabold text-emerald-700 uppercase">Langkah 1</div>
+                                <h4 class="font-bold text-slate-900 text-sm">Pengumpulan Data</h4>
+                                <p class="text-xs text-slate-600">Mengumpulkan data mentah melalui survei, observasi, kuisioner, atau catatan eksperimen.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-teal-50/50 border border-teal-100 space-y-2">
+                                <div class="text-xs font-extrabold text-teal-700 uppercase">Langkah 2</div>
+                                <h4 class="font-bold text-slate-900 text-sm">Visualisasi Data</h4>
+                                <p class="text-xs text-slate-600">Mengubah angka-angka tabel menjadi grafik batang (bar chart), grafik lingkaran (pie chart), atau diagram garis.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-cyan-50/50 border border-cyan-100 space-y-2">
+                                <div class="text-xs font-extrabold text-cyan-700 uppercase">Langkah 3</div>
+                                <h4 class="font-bold text-slate-900 text-sm">Interpretasi Data</h4>
+                                <p class="text-xs text-slate-600">Membaca arti di balik grafik untuk menarik kesimpulan dan keputusan yang berorientasi pada fakta.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Chart Tool Jump Banner -->
+                    <div class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-5 rounded-2xl flex items-center justify-between">
+                        <div>
+                            <h4 class="font-bold text-sm">Uji Coba Pembuat Grafik Otomatis!</h4>
+                            <p class="text-xs text-emerald-100">Ubah tabel nilai siswa menjadi grafik interaktif secara langsung.</p>
+                        </div>
+                        <button onclick="switchTab('simulasi')" class="bg-white text-emerald-700 font-bold text-xs px-4 py-2.5 rounded-xl hover:bg-emerald-50 transition whitespace-nowrap">
+                            Buka Visualizer Data <i class="fa-solid fa-chart-pie ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 3: LABORATORIUM INTERAKTIF ==================== -->
+        <section id="tab-simulasi" class="tab-content hidden space-y-8">
+            <div class="text-center max-w-xl mx-auto space-y-2">
+                <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full"><i class="fa-solid fa-flask mr-1"></i> Praktikum Virtual</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Laboratorium Simulasi Interaktif</h2>
+                <p class="text-xs text-slate-500">Pilih simulasi di bawah untuk membuktikan konsep teori secara praktis!</p>
+            </div>
+
+            <!-- SIMULATION 1: STACK & QUEUE VISUALIZER -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                    <div>
+                        <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md">Simulasi Bab 2</span>
+                        <h3 class="text-xl font-bold text-slate-900 mt-1">1. Visualizer Struktur Data: Stack (Tumpukan) vs Queue (Antrean)</h3>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button id="sim-mode-stack" onclick="setSimMode('stack')" class="px-4 py-1.5 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm">Modus Stack (LIFO)</button>
+                        <button id="sim-mode-queue" onclick="setSimMode('queue')" class="px-4 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">Modus Queue (FIFO)</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Controls -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
+                        <h4 class="font-bold text-slate-800 text-sm">Kontrol Elemen Data</h4>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Data / Elemen:</label>
+                            <input type="text" id="data-input-val" placeholder="Contoh: Dokumen A, Piring 1" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="pushData()" id="btn-action-add" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2.5 rounded-xl shadow-sm transition">
+                                <i class="fa-solid fa-plus mr-1"></i> Push / Enqueue
+                            </button>
+                            <button onclick="popData()" id="btn-action-remove" class="bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold py-2.5 rounded-xl shadow-sm transition">
+                                <i class="fa-solid fa-minus mr-1"></i> Pop / Dequeue
+                            </button>
+                        </div>
+                        <button onclick="clearSimData()" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold py-2 rounded-xl transition">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Kosongkan Data
+                        </button>
+
+                        <div class="p-3 bg-blue-50 border border-blue-200 rounded-xl text-[11px] text-blue-900 leading-relaxed" id="sim-info-desc">
+                            <strong>Aturan Stack (LIFO):</strong> Data yang dimasukkan paling akhir akan menjadi data pertama yang diambil saat diklik Pop.
+                        </div>
+                    </div>
+
+                    <!-- Canvas Visualization Box -->
+                    <div class="md:col-span-2 bg-slate-900 rounded-2xl p-6 flex flex-col justify-between min-h-[260px] relative overflow-hidden">
+                        <div class="text-xs text-slate-400 font-mono flex justify-between">
+                            <span>STATUS CONTAINER: <span id="sim-container-type" class="text-amber-400">STACK</span></span>
+                            <span>JUMLAH DATA: <span id="sim-count" class="text-emerald-400">0</span></span>
+                        </div>
+
+                        <!-- Animated Data Elements Area -->
+                        <div id="sim-display-area" class="flex flex-col-reverse justify-start items-center gap-2 my-4 min-h-[160px]">
+                            <!-- Dynamic stack items inserted here -->
+                            <span class="text-xs text-slate-500 my-auto italic">Data masih kosong. Masukkan nama data di sebelah kiri!</span>
+                        </div>
+
+                        <div class="text-[10px] text-slate-500 text-center font-mono">
+                            --- Struktur Memori Komputer ---
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIMULATION 2: NETWORK PACKET ROUTER & PASSWORD CHECKER -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Packet Router -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+                    <span class="text-xs font-bold text-purple-600 bg-purple-50 px-2.5 py-1 rounded-md">Simulasi Bab 3</span>
+                    <h3 class="text-lg font-bold text-slate-900">2. Simulasi Pengiriman Paket Data (IP Routing)</h3>
+                    <p class="text-xs text-slate-500">Klik tombol di bawah untuk menyimulasikan bagaimana pesan Anda dikirim dari Komputer Pengirim ke Web Server melalui Router & Firewall.</p>
+
+                    <div class="bg-slate-900 p-4 rounded-2xl space-y-4">
+                        <div class="flex justify-between items-center text-white text-xs">
+                            <div class="text-center space-y-1">
+                                <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-laptop"></i></div>
+                                <span class="block text-[10px] text-slate-400">Komputer A</span>
+                            </div>
+                            <i id="pkt-arrow-1" class="fa-solid fa-arrow-right text-slate-600"></i>
+                            <div class="text-center space-y-1">
+                                <div class="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-network-wired"></i></div>
+                                <span class="block text-[10px] text-slate-400">Router ISP</span>
+                            </div>
+                            <i id="pkt-arrow-2" class="fa-solid fa-arrow-right text-slate-600"></i>
+                            <div class="text-center space-y-1">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-server"></i></div>
+                                <span class="block text-[10px] text-slate-400">Web Server</span>
+                            </div>
+                        </div>
+
+                        <div id="packet-status-box" class="p-3 bg-slate-800 rounded-xl text-center text-xs text-slate-300 font-mono">
+                            Siap mengirimkan data...
+                        </div>
+                    </div>
+
+                    <button onclick="simulatePacketTransmission()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs py-2.5 rounded-xl transition shadow-sm">
+                        <i class="fa-solid fa-paper-plane mr-1.5"></i> Kirim Paket Data Enkripsi
+                    </button>
+                </div>
+
+                <!-- Password Security Tester -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+                    <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-md">Simulasi Keamanan Cyber</span>
+                    <h3 class="text-lg font-bold text-slate-900">3. Uji Kekuatan Kata Sandi (Password Checker)</h3>
+                    <p class="text-xs text-slate-500">Ketikkan sebuah contoh kata sandi untuk menganalisis tingkat keamanannya terhadap peretas.</p>
+
+                    <div class="space-y-3">
+                        <input type="text" id="pwd-input" oninput="checkPasswordStrength()" placeholder="Ketik kata sandi di sini..." class="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-amber-500">
+                        
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs font-semibold">
+                                <span class="text-slate-600">Kekuatan Kata Sandi:</span>
+                                <span id="pwd-strength-label" class="text-slate-400">Belum Diisi</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                                <div id="pwd-strength-bar" class="h-full bg-slate-300 transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div id="pwd-tips" class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-600 space-y-1">
+                            <p class="font-bold text-slate-700">💡 Syarat Kata Sandi Kuat:</p>
+                            <p>✓ Minimal 8 karakter &bull; ✓ Campuran huruf besar & kecil &bull; ✓ Ada angka & simbol khas (!@#$)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIMULATION 3: DATA VISUALIZER CHART BUILDER -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                <div>
+                    <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">Simulasi Bab 4</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-1">4. Live Interactive Chart Builder (Visualisasi Data)</h3>
+                    <p class="text-xs text-slate-500">Ubah data nilai di tabel bawah ini untuk melihat perubahan grafik dan interpretasi data secara otomatis!</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Table Input -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                        <h4 class="font-bold text-xs text-slate-700 uppercase tracking-wider">Tabel Data Nilai Siswa</h4>
+                        
+                        <div class="space-y-2 text-xs">
+                            <div class="flex justify-between items-center">
+                                <span>Tugas 1:</span>
+                                <input type="number" id="chart-val-1" value="85" onchange="updateChartData()" class="w-16 px-2 py-1 border rounded-lg text-center font-bold">
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Tugas 2:</span>
+                                <input type="number" id="chart-val-2" value="90" onchange="updateChartData()" class="w-16 px-2 py-1 border rounded-lg text-center font-bold">
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Kuis Bab 2:</span>
+                                <input type="number" id="chart-val-3" value="78" onchange="updateChartData()" class="w-16 px-2 py-1 border rounded-lg text-center font-bold">
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Kuis Bab 3:</span>
+                                <input type="number" id="chart-val-4" value="92" onchange="updateChartData()" class="w-16 px-2 py-1 border rounded-lg text-center font-bold">
+                            </div>
+                        </div>
+
+                        <div class="pt-2">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Bentuk Grafik:</label>
+                            <select id="chart-type-select" onchange="updateChartData()" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-300">
+                                <option value="bar">Grafik Batang (Bar Chart)</option>
+                                <option value="line">Grafik Garis (Line Chart)</option>
+                                <option value="pie">Grafik Lingkaran (Pie Chart)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Chart Canvas & Automated Interpretation -->
+                    <div class="md:col-span-2 bg-white p-4 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-4">
+                        <div class="relative h-[220px] w-full flex items-center justify-center">
+                            <canvas id="interactiveChart"></canvas>
+                        </div>
+
+                        <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
+                            <span class="text-xs font-bold text-emerald-800"><i class="fa-solid fa-magnifying-glass-chart mr-1"></i> Interpretasi Data Otomatis:</span>
+                            <p id="chart-interpretation-text" class="text-xs text-emerald-900 mt-0.5">
+                                Nilai tertinggi berada pada Kuis Bab 3 dengan nilai 92. Rata-rata nilai keseluruhan siswa adalah 86.25.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 4: GAME EDUKASI ==================== -->
+        <section id="tab-game" class="tab-content hidden space-y-6">
+            <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white p-6 sm:p-8 rounded-3xl shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-2 max-w-xl">
+                    <span class="bg-white/20 text-white text-xs font-extrabold px-3 py-1 rounded-full"><i class="fa-solid fa-gamepad mr-1"></i> Mini Game Informatika</span>
+                    <h2 class="text-2xl sm:text-4xl font-black">Petualangan Cyber & Logika</h2>
+                    <p class="text-xs sm:text-sm text-amber-100">Selesaikan 5 level tantangan logika berpikir komputasional & jaringan untuk memenangkan piala Emas!</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 text-center min-w-[140px]">
+                    <span class="text-xs text-amber-100 block">Skor Game Anda</span>
+                    <span id="game-score-display" class="text-3xl font-black text-amber-300">0</span>
+                    <span class="text-[10px] block text-white/80">Poin</span>
+                </div>
+            </div>
+
+            <!-- Game Box Screen -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm max-w-3xl mx-auto space-y-6">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+                    <div class="flex items-center space-x-2">
+                        <span id="game-level-badge" class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">LEVEL 1 / 5</span>
+                        <h3 id="game-level-title" class="text-base sm:text-lg font-bold text-slate-900">Misi 1: Mengurutkan Tumpukan (Stack)</h3>
+                    </div>
+                    <button onclick="resetGame()" class="text-xs font-bold text-slate-500 hover:text-slate-800">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Ulang Game
+                    </button>
+                </div>
+
+                <!-- Game Question & Interaction Display Area -->
+                <div id="game-content-area" class="space-y-6">
+                    <!-- Dynamic rendering by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 5: KUIS & EVALUASI ==================== -->
+        <section id="tab-kuis" class="tab-content hidden space-y-8">
+            <div class="text-center max-w-xl mx-auto space-y-2">
+                <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full"><i class="fa-solid fa-graduation-cap mr-1"></i> Uji Pemahaman</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Kuis Interactive & Evaluasi Akhir</h2>
+                <p class="text-xs text-slate-500">Kuis pilihan ganda dengan skor otomatis, penjelasan kunci jawaban, dan sertifikat nilai.</p>
+            </div>
+
+            <!-- Quiz Selector Buttons -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <button onclick="loadQuiz('bab2')" class="p-5 bg-white border border-slate-200 hover:border-blue-500 rounded-2xl text-left shadow-sm hover:shadow-md transition group">
+                    <span class="text-xs font-bold text-blue-600 block">Kuis Formatif</span>
+                    <h4 class="font-bold text-slate-900 text-base group-hover:text-blue-600">Bab 2: BK</h4>
+                    <p class="text-xs text-slate-500 mt-1">5 Soal Pilihan Ganda</p>
+                </button>
+                <button onclick="loadQuiz('bab3')" class="p-5 bg-white border border-slate-200 hover:border-purple-500 rounded-2xl text-left shadow-sm hover:shadow-md transition group">
+                    <span class="text-xs font-bold text-purple-600 block">Kuis Formatif</span>
+                    <h4 class="font-bold text-slate-900 text-base group-hover:text-purple-600">Bab 3: JKI</h4>
+                    <p class="text-xs text-slate-500 mt-1">5 Soal Pilihan Ganda</p>
+                </button>
+                <button onclick="loadQuiz('bab4')" class="p-5 bg-white border border-slate-200 hover:border-emerald-500 rounded-2xl text-left shadow-sm hover:shadow-md transition group">
+                    <span class="text-xs font-bold text-emerald-600 block">Kuis Formatif</span>
+                    <h4 class="font-bold text-slate-900 text-base group-hover:text-emerald-600">Bab 4: Analisis Data</h4>
+                    <p class="text-xs text-slate-500 mt-1">5 Soal Pilihan Ganda</p>
+                </button>
+                <button onclick="loadQuiz('evaluasi')" class="p-5 bg-gradient-to-br from-indigo-600 to-purple-700 text-white rounded-2xl text-left shadow-md hover:shadow-lg transition">
+                    <span class="text-xs font-bold text-amber-300 block">Ujian Sumatif</span>
+                    <h4 class="font-bold text-white text-base">Evaluasi Akhir</h4>
+                    <p class="text-xs text-indigo-100 mt-1">10 Soal Komprehensif</p>
+                </button>
+            </div>
+
+            <!-- Quiz Display Window -->
+            <div id="quiz-container" class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+                    <div>
+                        <span id="quiz-badge-title" class="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">Kuis Bab 2</span>
+                        <h3 id="quiz-main-title" class="text-xl font-bold text-slate-900 mt-2">Soal Pilihan Ganda</h3>
+                    </div>
+                    <span id="quiz-step-indicator" class="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-lg">Soal 1 Dari 5</span>
+                </div>
+
+                <!-- Question Area -->
+                <div id="quiz-body" class="space-y-6">
+                    <!-- Dynamic Questions Injected Here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 6: PROYEK & REFLEKSI ==================== -->
+        <section id="tab-proyek" class="tab-content hidden space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Tugas Proyek Kurikulum Merdeka -->
+                <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                    <div class="border-b border-slate-100 pb-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-3 py-1 rounded-full"><i class="fa-solid fa-list-check mr-1"></i> Tugas Praktik</span>
+                        <h3 class="text-xl font-extrabold text-slate-900 mt-2">Tugas Proyek Kelompok</h3>
+                        <p class="text-xs text-slate-500">Pilih salah satu tugas proyek berbasis Kurikulum Merdeka di bawah ini.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                            <span class="text-[10px] font-bold text-blue-600 bg-blue-100 px-2 py-0.5 rounded">Proyek Bab 2</span>
+                            <h4 class="font-bold text-sm text-slate-900">Poster Diagram Alir (Flowchart)</h4>
+                            <p class="text-xs text-slate-600">Buatlah poster instruksi algoritma sederhana (contoh: Algoritma Mencuci Tangan yang Benar) menggunakan simbol flowchart yang tepat pada kertas A3!</p>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                            <span class="text-[10px] font-bold text-purple-600 bg-purple-100 px-2 py-0.5 rounded">Proyek Bab 3</span>
+                            <h4 class="font-bold text-sm text-slate-900">Kampanye "Internet Sehat & Safe Password"</h4>
+                            <p class="text-xs text-slate-600">Buatlah infografis digital mengenai bahaya *Phishing* dan pentingnya menjaga keandalan kata sandi untuk ditempel di majalah dinding sekolah.</p>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                            <span class="text-[10px] font-bold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded">Proyek Bab 4</span>
+                            <h4 class="font-bold text-sm text-slate-900">Mini Survei Hobi Siswa Kelas VIII</h4>
+                            <p class="text-xs text-slate-600">Kumpulkan data hobi dari 20 teman sekelasmu, olah dalam tabel, buatkan grafik batang, lalu tuliskan 2 kalimat kesimpulan interpretasinya.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Reflection Form -->
+                <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                    <div class="border-b border-slate-100 pb-4">
+                        <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full"><i class="fa-solid fa-pen-to-square mr-1"></i> Lembar Refleksi</span>
+                        <h3 class="text-xl font-extrabold text-slate-900 mt-2">Refleksi Belajar Siswa</h3>
+                        <p class="text-xs text-slate-500">Isi perasaan dan pemahamanmu setelah mempelajari materi ini.</p>
+                    </div>
+
+                    <form id="reflection-form" onsubmit="saveReflection(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Nama Lengkap Siswa:</label>
+                            <input type="text" id="refl-student-name" required placeholder="Contoh: Budi Santoso" class="w-full text-xs px-3 py-2.5 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Materi mana yang paling kamu kuasai?</label>
+                            <select id="refl-favorite-topic" class="w-full text-xs px-3 py-2.5 rounded-xl border border-slate-300">
+                                <option value="Berpikir Komputasional (Stack & Queue)">Bab 2: Berpikir Komputasional (Stack & Queue)</option>
+                                <option value="Jaringan Komputer & Enkripsi Data">Bab 3: Jaringan Komputer & Enkripsi Data</option>
+                                <option value="Analisis & Visualisasi Data Grafik">Bab 4: Analisis & Visualisasi Data Grafik</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Bagaimana perasaanmu setelah belajar?</label>
+                            <div class="flex space-x-3 text-2xl pt-1">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="mood" value="😊 Sangat Senang" checked class="hidden peer">
+                                    <span class="p-2 rounded-xl border border-slate-200 peer-checked:bg-amber-100 peer-checked:border-amber-400 block">😊</span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="mood" value="🤔 Paham Tapi Butuh Latihan" class="hidden peer">
+                                    <span class="p-2 rounded-xl border border-slate-200 peer-checked:bg-amber-100 peer-checked:border-amber-400 block">🤔</span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="mood" value="😅 Perlu Bimbingan Guru" class="hidden peer">
+                                    <span class="p-2 rounded-xl border border-slate-200 peer-checked:bg-amber-100 peer-checked:border-amber-400 block">😅</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Pesan / Kendala yang Ingin Disampaikan ke Bpk Heru:</label>
+                            <textarea id="refl-notes" rows="3" placeholder="Tuliskan kendala atau kesan belajar di sini..." class="w-full text-xs p-3 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-3 rounded-xl transition shadow-md">
+                            <i class="fa-solid fa-paper-plane mr-1.5"></i> Simpan Catatan Refleksi
+                        </button>
+                    </form>
+
+                    <div id="refl-saved-msg" class="hidden p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800">
+                        <i class="fa-solid fa-check-circle mr-1"></i> Refleksi Anda telah berhasil tersimpan di peramban browser!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 7: PROFIL GURU & SEKOLAH ==================== -->
+        <section id="tab-profil" class="tab-content hidden space-y-8">
+            <div class="bg-white p-6 sm:p-10 rounded-3xl border border-slate-200 shadow-sm space-y-8 max-w-4xl mx-auto">
+                <!-- Header Identity -->
+                <div class="flex flex-col sm:flex-row items-center gap-6 border-b border-slate-100 pb-6 text-center sm:text-left">
+                    <div class="w-24 h-24 rounded-3xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center text-white text-4xl font-extrabold shadow-lg">
+                        HP
+                    </div>
+                    <div class="space-y-1">
+                        <span class="bg-indigo-50 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full border border-indigo-200">GURU PENGAMPU INFORMATIKA</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Drs. H. HERU PRABOWO</h2>
+                        <p class="text-sm font-semibold text-slate-600">SMP BINA BANGSA MANDIRI</p>
+                        <p class="text-xs text-slate-500">Mata Pelajaran: Informatika &bull; Kelas VIII &bull; Kurikulum Merdeka</p>
+                    </div>
+                </div>
+
+                <!-- Info Cards Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                        <h4 class="font-bold text-slate-900 text-sm flex items-center">
+                            <i class="fa-solid fa-school text-indigo-600 mr-2"></i> Identitas Satuan Pendidikan
+                        </h4>
+                        <ul class="text-xs text-slate-600 space-y-1.5 pt-1">
+                            <li><strong>Nama Sekolah:</strong> SMP BINA BANGSA MANDIRI</li>
+                            <li><strong>Jenjang:</strong> Sekolah Menengah Pertama (SMP)</li>
+                            <li><strong>Target Kelas:</strong> Kelas VIII (Delapan)</li>
+                            <li><strong>Kurikulum:</strong> Kurikulum Merdeka 2026</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                        <h4 class="font-bold text-slate-900 text-sm flex items-center">
+                            <i class="fa-solid fa-bullseye text-indigo-600 mr-2"></i> Visi Pembelajaran Informatika
+                        </h4>
+                        <p class="text-xs text-slate-600 leading-relaxed pt-1">
+                            "Membentuk peserta didik SMP BINA BANGSA MANDIRI yang bernalar kritis, kreatif, serta menguasai fondasi berpikir komputasional dan etika digital untuk menjawab tantangan era kecerdasan buatan."
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Storage Info Note -->
+                <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-xs text-amber-900 flex items-start space-x-3">
+                    <i class="fa-solid fa-database text-amber-600 text-lg mt-0.5"></i>
+                    <div>
+                        <strong>Informasi Penyimpanan data:</strong>
+                        <p class="text-[11px] text-amber-800 mt-0.5">
+                            Sistem media pembelajaran interaktif ini menggunakan penyimpanan lokal peramban (*browser LocalStorage*). Seluruh progres belajar, nilai kuis, dan lembar refleksi tersimpan secara aman di dalam perangkat (ponsel/laptop) Anda.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-6 mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p class="font-semibold text-slate-300">INFORMATIKA CERDAS &bull; KELAS VIII SMP BINA BANGSA MANDIRI</p>
+            <p>Pengembang Media Pembelajaran: Drs. H. HERU PRABOWO &bull; Kurikulum Merdeka</p>
+            <p class="text-[10px] text-slate-500">&copy; 2026 Media Pembelajaran Interaktif. Siap diakses di PC & Smartphone.</p>
+        </div>
+    </footer>
+
+    <script>
+        /* STATE & LOCALSTORAGE MANAGEMENT */
+        let state = {
+            progress: { bab2: false, bab3: false, bab4: false },
+            scores: { bab2: 0, bab3: 0, bab4: 0, evaluasi: 0 },
+            simData: ["Piring A", "Piring B", "Piring C"],
+            simMode: 'stack', // 'stack' or 'queue'
+            gameLevel: 1,
+            gameScore: 0
+        };
+
+        // Load saved state on startup
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('info_cerdas_state');
+            if (saved) {
+                try {
+                    state = { ...state, ...JSON.parse(saved) };
+                } catch(e) {}
+            }
+            updateProgressUI();
+            renderSimDisplay();
+            initChart();
+            renderGameLevel();
+        });
+
+        function saveState() {
+            localStorage.setItem('info_cerdas_state', JSON.stringify(state));
+            updateProgressUI();
+        }
+
+        /* NAVIGATION TABS */
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-indigo-600', 'bg-indigo-50', 'font-semibold');
+                btn.classList.add('text-slate-600');
+            });
+            const activeNav = document.getElementById('nav-' + tabId);
+            if (activeNav) {
+                activeNav.classList.add('text-indigo-600', 'bg-indigo-50', 'font-semibold');
+            }
+
+            // Close mobile menu if open
+            document.getElementById('mobileMenu').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        }
+
+        function openChapter(babId) {
+            switchTab('materi');
+            showChapterTab(babId);
+        }
+
+        function showChapterTab(babId) {
+            document.querySelectorAll('.chapter-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('content-' + babId).classList.remove('hidden');
+
+            document.querySelectorAll('.chapter-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white');
+                btn.classList.add('bg-slate-100', 'text-slate-600');
+            });
+            const activeBtn = document.getElementById('btn-tab-' + babId);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-slate-100', 'text-slate-600');
+                activeBtn.classList.add('bg-indigo-600', 'text-white');
+            }
+        }
+
+        function markChapterDone(babKey) {
+            state.progress[babKey] = true;
+            saveState();
+            alert('Hebat! Materi ' + babKey.toUpperCase() + ' telah ditandai selesai.');
+        }
+
+        function updateProgressUI() {
+            const b2 = state.progress.bab2 ? 100 : 0;
+            const b3 = state.progress.bab3 ? 100 : 0;
+            const b4 = state.progress.bab4 ? 100 : 0;
+
+            document.getElementById('progress-bab2-text').innerText = b2 + '% Selesai';
+            document.getElementById('progress-bab2-bar').style.width = b2 + '%';
+
+            document.getElementById('progress-bab3-text').innerText = b3 + '% Selesai';
+            document.getElementById('progress-bab3-bar').style.width = b3 + '%';
+
+            document.getElementById('progress-bab4-text').innerText = b4 + '% Selesai';
+            document.getElementById('progress-bab4-bar').style.width = b4 + '%';
+
+            const totalScore = state.scores.bab2 + state.scores.bab3 + state.scores.bab4;
+            document.getElementById('total-score-text').innerText = totalScore + ' / 300';
+        }
+
+        /* STACK & QUEUE SIMULATION LOGIC */
+        function setSimMode(mode) {
+            state.simMode = mode;
+            document.getElementById('sim-container-type').innerText = mode.toUpperCase();
+            
+            const btnStack = document.getElementById('sim-mode-stack');
+            const btnQueue = document.getElementById('sim-mode-queue');
+            const infoDesc = document.getElementById('sim-info-desc');
+
+            if (mode === 'stack') {
+                btnStack.className = "px-4 py-1.5 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm";
+                btnQueue.className = "px-4 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200";
+                infoDesc.innerHTML = "<strong>Aturan Stack (LIFO):</strong> Elemen yang terakhir masuk akan menjadi yang pertama kali dikeluarkannya (Pop).";
+            } else {
+                btnQueue.className = "px-4 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-sm";
+                btnStack.className = "px-4 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200";
+                infoDesc.innerHTML = "<strong>Aturan Queue (FIFO):</strong> Elemen yang pertama kali masuk akan menjadi yang pertama dikeluarkannya (Dequeue).";
+            }
+            renderSimDisplay();
+        }
+
+        function pushData() {
+            const valInput = document.getElementById('data-input-val');
+            const val = valInput.value.trim() || ("Data-" + (state.simData.length + 1));
+            state.simData.push(val);
+            valInput.value = '';
+            renderSimDisplay();
+        }
+
+        function popData() {
+            if (state.simData.length === 0) {
+                alert("Container data sudah kosong!");
+                return;
+            }
+            if (state.simMode === 'stack') {
+                state.simData.pop(); // LIFO
+            } else {
+                state.simData.shift(); // FIFO
+            }
+            renderSimDisplay();
+        }
+
+        function clearSimData() {
+            state.simData = [];
+            renderSimDisplay();
+        }
+
+        function renderSimDisplay() {
+            const area = document.getElementById('sim-display-area');
+            document.getElementById('sim-count').innerText = state.simData.length;
+
+            if (state.simData.length === 0) {
+                area.innerHTML = `<span class="text-xs text-slate-500 my-auto italic">Data masih kosong. Masukkan nama data di sebelah kiri!</span>`;
+                return;
+            }
+
+            let html = '';
+            state.simData.forEach((item, index) => {
+                const isTop = (index === state.simData.length - 1 && state.simMode === 'stack');
+                const isFront = (index === 0 && state.simMode === 'queue');
+                
+                let badge = '';
+                if (isTop) badge = '<span class="bg-amber-400 text-slate-900 text-[10px] font-extrabold px-2 py-0.5 rounded ml-2">TOP (Keluar Pertama)</span>';
+                if (isFront) badge = '<span class="bg-emerald-400 text-slate-900 text-[10px] font-extrabold px-2 py-0.5 rounded ml-2">FRONT (Keluar Pertama)</span>';
+
+                html += `
+                    <div class="w-full max-w-sm bg-indigo-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md border border-indigo-400 flex justify-between items-center transition-all duration-300">
+                        <span><i class="fa-solid fa-cube mr-2 text-indigo-200"></i>${item}</span>
+                        ${badge}
+                    </div>
+                `;
+            });
+
+            area.innerHTML = html;
+        }
+
+        /* PACKET ROUTING SIMULATION */
+        function simulatePacketTransmission() {
+            const status = document.getElementById('packet-status-box');
+            const arr1 = document.getElementById('pkt-arrow-1');
+            const arr2 = document.getElementById('pkt-arrow-2');
+
+            status.innerHTML = "<span class='text-amber-400'>[1/3] Membungkus pesan ke dalam Paket Data Enkripsi SSL...</span>";
+            arr1.className = "fa-solid fa-arrow-right text-amber-400 animate-pulse text-xl";
+
+            setTimeout(() => {
+                status.innerHTML = "<span class='text-purple-400'>[2/3] Router memeriksa IP Address tujuan & meneruskan data...</span>";
+                arr1.className = "fa-solid fa-arrow-right text-emerald-400 text-xl";
+                arr2.className = "fa-solid fa-arrow-right text-amber-400 animate-pulse text-xl";
+            }, 1500);
+
+            setTimeout(() => {
+                status.innerHTML = "<span class='text-emerald-400 font-bold'>[3/3] Paket Sukses Diterima Web Server! Koneksi Aman (200 OK).</span>";
+                arr2.className = "fa-solid fa-arrow-right text-emerald-400 text-xl";
+            }, 3000);
+        }
+
+        /* PASSWORD STRENGTH CHECKER */
+        function checkPasswordStrength() {
+            const pwd = document.getElementById('pwd-input').value;
+            const bar = document.getElementById('pwd-strength-bar');
+            const label = document.getElementById('pwd-strength-label');
+
+            if (!pwd) {
+                bar.style.width = '0%';
+                bar.className = 'h-full bg-slate-300';
+                label.innerText = 'Belum Diisi';
+                return;
+            }
+
+            let score = 0;
+            if (pwd.length >= 8) score += 30;
+            if (/[A-Z]/.test(pwd)) score += 25;
+            if (/[0-9]/.test(pwd)) score += 25;
+            if (/[!@#$%^&*]/.test(pwd)) score += 20;
+
+            bar.style.width = score + '%';
+            if (score < 40) {
+                bar.className = 'h-full bg-rose-500';
+                label.innerText = 'Lemah ❌';
+                label.className = 'text-rose-500 font-bold';
+            } else if (score < 80) {
+                bar.className = 'h-full bg-amber-500';
+                label.innerText = 'Sedang ⚠️';
+                label.className = 'text-amber-500 font-bold';
+            } else {
+                bar.className = 'h-full bg-emerald-500';
+                label.innerText = 'Sangat Kuat ✅';
+                label.className = 'text-emerald-600 font-bold';
+            }
+        }
+
+        /* CHART.JS DATA ANALYSIS SIMULATION */
+        let myChart = null;
+
+        function initChart() {
+            const ctx = document.getElementById('interactiveChart').getContext('2d');
+            myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Tugas 1', 'Tugas 2', 'Kuis Bab 2', 'Kuis Bab 3'],
+                    datasets: [{
+                        label: 'Nilai Siswa',
+                        data: [85, 90, 78, 92],
+                        backgroundColor: ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function updateChartData() {
+            const v1 = parseFloat(document.getElementById('chart-val-1').value) || 0;
+            const v2 = parseFloat(document.getElementById('chart-val-2').value) || 0;
+            const v3 = parseFloat(document.getElementById('chart-val-3').value) || 0;
+            const v4 = parseFloat(document.getElementById('chart-val-4').value) || 0;
+            const chartType = document.getElementById('chart-type-select').value;
+
+            myChart.config.type = chartType;
+            myChart.data.datasets[0].data = [v1, v2, v3, v4];
+            myChart.update();
+
+            // Automatic Interpretation Logic
+            const vals = [v1, v2, v3, v4];
+            const maxVal = Math.max(...vals);
+            const avg = (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1);
+            
+            const labels = ['Tugas 1', 'Tugas 2', 'Kuis Bab 2', 'Kuis Bab 3'];
+            const maxLabel = labels[vals.indexOf(maxVal)];
+
+            document.getElementById('chart-interpretation-text').innerText = 
+                `Nilai tertinggi siswa dicapai pada ${maxLabel} dengan skor ${maxVal}. Rata-rata pencapaian belajar keseluruhan adalah ${avg}.`;
+        }
+
+        /* MINI GAME: PETUALANGAN CYBER & LOGIKA */
+        const gameLevels = [
+            {
+                title: "Misi 1: Antrean Kantin (Queue - FIFO)",
+                desc: "Anisa, Budi, dan Cici mengantre membeli bakso. Jika Anisa datang pertama, siapakah yang pertama kali mendapatkan bakso?",
+                options: ["Anisa", "Budi", "Cici", "Semua Bersamaan"],
+                answer: 0
+            },
+            {
+                title: "Misi 2: Dekomposisi Masalah",
+                desc: "Kamu diminta membuat website sekolah. Langkah dekomposisi awal yang paling tepat adalah:",
+                options: ["Langsung bayar server mahal", "Memecah project menjadi perancangan tampilan, penulisan isi, dan pengujian", "Meminta guru mengerjakan semuanya", "Membeli komputer baru"],
+                answer: 1
+            },
+            {
+                title: "Misi 3: Deteksi Link Phishing",
+                desc: "Manakah alamat URL yang paling aman untuk login akun belajar?",
+                options: ["http://login-sekolah-palsu.net/update", "https://smpbinabangsamandiri.sch.id", "http://dapat-hadiah-gratis.biz", "http://192.168.0.1.bad.com"],
+                answer: 1
+            },
+            {
+                title: "Misi 4: Membaca Grafik",
+                desc: "Jika Grafik Batang menunjukkan diagram siswa terendah ada pada Bab 2, tindakan interpretasi data yang tepat adalah:",
+                options: ["Mengabaikan materi Bab 2", "Mengadakan remedial & re-review khusus Bab 2", "Menghapus Bab 2 dari kurikulum", "Menyalahkan komputer"],
+                answer: 1
+            },
+            {
+                title: "Misi 5: Enkripsi Kata Sandi",
+                desc: "Mengapa kata sandi 'P@ssw0rd2026!' lebih aman dibandingkan '12345678'?",
+                options: ["Karena lebih pendek", "Karena menggabungkan huruf besar, angka, dan karakter khusus", "Karena mudah ditebak teman", "Tidak ada bedanya"],
+                answer: 1
+            }
+        ];
+
+        function renderGameLevel() {
+            const area = document.getElementById('game-content-area');
+            const lvlData = gameLevels[state.gameLevel - 1];
+
+            if (!lvlData) {
+                // Game Finished
+                area.innerHTML = `
+                    <div class="text-center py-8 space-y-4">
+                        <div class="w-20 h-20 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center text-4xl mx-auto shadow-inner">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-slate-900">Selamat! Anda Tamat!</h3>
+                        <p class="text-xs text-slate-600">Anda berhasil menyelesaikan seluruh tantangan Petualangan Cyber & Logika.</p>
+                        <p class="text-lg font-bold text-amber-600">Total Skor Game: ${state.gameScore} Poin</p>
+                        <button onclick="resetGame()" class="bg-amber-500 text-white font-bold text-xs px-6 py-3 rounded-xl hover:bg-amber-600 transition">
+                            Mainkan Lagi Dari Awal
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            document.getElementById('game-level-badge').innerText = `LEVEL ${state.gameLevel} / 5`;
+            document.getElementById('game-level-title').innerText = lvlData.title;
+
+            let optsHtml = '';
+            lvlData.options.forEach((opt, idx) => {
+                optsHtml += `
+                    <button onclick="checkGameAnswer(${idx})" class="w-full text-left p-4 rounded-2xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50/50 transition font-medium text-xs text-slate-800 flex items-center justify-between">
+                        <span>${opt}</span>
+                        <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                    </button>
+                `;
+            });
+
+            area.innerHTML = `
+                <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 font-medium">
+                    <i class="fa-solid fa-circle-question text-amber-500 mr-2"></i>${lvlData.desc}
+                </div>
+                <div class="space-y-3">
+                    ${optsHtml}
+                </div>
+            `;
+        }
+
+        function checkGameAnswer(chosenIdx) {
+            const lvlData = gameLevels[state.gameLevel - 1];
+            if (chosenIdx === lvlData.answer) {
+                state.gameScore += 20;
+                document.getElementById('game-score-display').innerText = state.gameScore;
+                alert("Jawaban Benar! +20 Poin 🎉");
+            } else {
+                alert("Jawaban kurang tepat, mari coba level selanjutnya!");
+            }
+            state.gameLevel++;
+            renderGameLevel();
+        }
+
+        function resetGame() {
+            state.gameLevel = 1;
+            state.gameScore = 0;
+            document.getElementById('game-score-display').innerText = '0';
+            renderGameLevel();
+        }
+
+        /* QUIZ BANK & ENGINE */
+        const quizBank = {
+            bab2: [
+                { q: "Prinsip LIFO (Last In, First Out) digunakan pada struktur data:", o: ["Queue", "Stack", "Tree", "Graph"], a: 1, exp: "Stack (Tumpukan) menganut prinsip LIFO, di mana data terakhir masuk akan keluar pertama." },
+                { q: "Membagi masalah kompleks menjadi bagian-bagian kecil disebut:", o: ["Abstraksi", "Dekomposisi", "Algoritma", "Pengenalan Pola"], a: 1, exp: "Dekomposisi memecah masalah besar menjadi komponen kecil." },
+                { q: "Contoh penerapannya struktur data Queue dalam kehidupan sehari-hari adalah:", o: ["Tumpukan piring", "Antrean loket tiket", "Fitur Undo Word", "Tumpukan baju"], a: 1, exp: "Antrean loket melayani pembeli pertama kali yang datang (FIFO)." },
+                { q: "Langkah-langkah instruksi logis dan terurut untuk menyelesaikan masalah disebut:", o: ["Algoritma", "Variabel", "Prosesor", "Data"], a: 0, exp: "Algoritma adalah urutan langkah logis." },
+                { q: "Menghilangkan detail informasi yang tidak penting merupakan proses:", o: ["Abstraksi", "Dekomposisi", "Kompilasi", "Eksekusi"], a: 0, exp: "Abstraksi memfokuskan kita hanya pada hal-hal penting." }
+            ],
+            bab3: [
+                { q: "Jaringan privat internal yang hanya dapat diakses oleh anggota organisasi sekolah disebut:", o: ["Internet", "Intranet", "Extranet", "Bluetooth"], a: 1, exp: "Intranet terbatas untuk jaringan internal lokal." },
+                { q: "Proses mengacak pesan asli menjadi kode rahasia agar tidak bisa dibaca dinamakan:", o: ["Enkripsi", "Dekripsi", "Browsing", "Phishing"], a: 0, exp: "Enkripsi mengamankan teks biasa menjadi bentuk acak ciphertext." },
+                { q: "Kejahatan cyber yang berusaha mencuri akun dengan menyamar sebagai situs resmi dinamakan:", o: ["Malware", "Phishing", "Spam", "Firewall"], a: 1, exp: "Phishing mengelabui korban untuk memberikan kredensial." },
+                { q: "Perangkat yang berfungsi menghubungkan dua jaringan komputer berbeda dan mengarahkan paket data adalah:", o: ["Router", "Monitor", "Printer", "Keyboard"], a: 0, exp: "Router mengarahkan lalu lintas data antar jaringan." },
+                { q: "Awalan protokol web yang menandakan bahwa koneksi data telah terenkripsi aman adalah:", o: ["http://", "https://", "ftp://", "file://"], a: 1, exp: "HTTPS menggunakan enkripsi SSL/TLS." }
+            ],
+            bab4: [
+                { q: "Bentuk grafik yang sangat tepat untuk menunjukkan persentase atau proporsi bagian dari keseluruhan adalah:", o: ["Grafik Garis", "Grafik Lingkaran (Pie Chart)", "Grafik Batang", "Scatter Plot"], a: 1, exp: "Pie chart membagi lingkaran menjadi persentase proporsional." },
+                { q: "Proses membaca arti dan mengambil kesimpulan dari tampilan grafik disebut:", o: ["Pengumpulan Data", "Interpretasi Data", "Entri Data", "Penghapusan Data"], a: 1, exp: "Interpretasi data menerjemahkan grafik menjadi informasi berguna." },
+                { q: "Jika kita ingin melihat tren kenaikan suhu udara dari jam ke jam, grafik paling cocok adalah:", o: ["Grafik Garis", "Grafik Lingkaran", "Tabel Polos", "Gambar Diagram"], a: 0, exp: "Grafik garis paling ideal menampilkan tren berkala (time series)." },
+                { q: "Data mentah yang berupa angka-angka statistik sebaiknya diubah ke bentuk visual agar:", o: ["Sulit dibaca", "Lebih menarik dan mudah dipahami", "Memperbesar ukuran file", "Sama saja"], a: 1, exp: "Visualisasi data mempermudah pemahaman manusia." },
+                { q: "Langkah pertama sebelum melakukan pengolahan data adalah:", o: ["Menghapus data", "Pengumpulan Data (Data Collection)", "Membuat Laporan", "Mencetak grafik"], a: 1, exp: "Data harus dikumpulkan terlebih dahulu sebelum diolah." }
+            ],
+            evaluasi: [
+                { q: "Struktur data Stack menggunakan prinsip:", o: ["FIFO", "LIFO", "LILO", "Random"], a: 1, exp: "Stack = Last In First Out." },
+                { q: "Antrean cetak pada mesin printer menggunakan struktur data:", o: ["Queue", "Stack", "Tree", "Graph"], a: 0, exp: "Printer mencetak dokumen pertama yang dikirim (FIFO)." },
+                { q: "Jaringan global yang menghubungkan seluruh komputer di dunia secara terbuka adalah:", o: ["Intranet", "Internet", "LAN", "PAN"], a: 1, exp: "Internet bersifat global dan terbuka." },
+                { q: "Keamanan data saat mentransfer kata sandi di internet dilindungi oleh:", o: ["Enkripsi", "Defragment", "Format Disk", "Overclock"], a: 0, exp: "Enkripsi melindungi kerahasiaan data." },
+                { q: "Tujuan utama visualisasi data menjadi grafik adalah:", o: ["Memudahkan pengambilan keputusan berbasis data", "Membuat komputer lambat", "Menghias layar", "Menyembunyikan angka"], a: 0, exp: "Grafik memudahkan interpretasi dan pengambilan keputusan." },
+                { q: "Menulis langkah-langkah resep membuat kue secara urut adalah contoh pilar BK:", o: ["Algoritma", "Abstraksi", "Dekomposisi", "Pola"], a: 0, exp: "Resep urut merupakan bentuk algoritma." },
+                { q: "Salah satu tanda situs web aman untuk bertransaksi adalah:", o: ["Memiliki simbol gembok & HTTPS", "Banyak iklan pop-up", "Alamat URL sangat panjang", "Tampilan merah menyala"], a: 0, exp: "HTTPS & ikon gembok menjamin enkripsi." },
+                { q: "Visualisasi data berbentuk grafik batang paling cocok untuk:", o: ["Membandingkan nilai antar kategori", "Menunjukkan lokasi peta", "Menyimpan file audio", "Menghitung rumus"], a: 0, exp: "Bar chart ideal untuk komparasi data." },
+                { q: "Tindak kejahatan pengirim email palsu untuk mencuri data pribadi disebut:", o: ["Phishing", "Debugging", "Programming", "Searching"], a: 0, exp: "Phishing mencuri identitas." },
+                { q: "Mata pelajaran Informatika Kurikulum Merdeka di SMP BINA BANGSA MANDIRI diajarkan oleh:", o: ["Drs. H. HERU PRABOWO", "Tim IT Pusat", "Guru Tamu", "Sistem Otomatis"], a: 0, exp: "Bapak Drs. H. HERU PRABOWO adalah guru pengampu mata pelajaran." }
+            ]
+        };
+
+        let currentQuizKey = 'bab2';
+        let currentQuizIndex = 0;
+        let currentQuizAnswers = [];
+
+        function loadQuiz(quizKey) {
+            currentQuizKey = quizKey;
+            currentQuizIndex = 0;
+            currentQuizAnswers = [];
+
+            const titleMap = {
+                bab2: "Kuis Bab 2: Berpikir Komputasional",
+                bab3: "Kuis Bab 3: Jaringan Komputer & Internet",
+                bab4: "Kuis Bab 4: Analisis Data",
+                evaluasi: "Evaluasi Akhir Semester - Kurikulum Merdeka"
+            };
+
+            document.getElementById('quiz-badge-title').innerText = quizKey.toUpperCase();
+            document.getElementById('quiz-main-title').innerText = titleMap[quizKey];
+            
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            const questions = quizBank[currentQuizKey];
+            const q = questions[currentQuizIndex];
+            const body = document.getElementById('quiz-body');
+
+            document.getElementById('quiz-step-indicator').innerText = `Soal ${currentQuizIndex + 1} Dari ${questions.length}`;
+
+            let optionsHtml = '';
+            q.o.forEach((opt, idx) => {
+                optionsHtml += `
+                    <label class="block p-4 rounded-2xl border border-slate-200 hover:border-indigo-500 hover:bg-indigo-50/40 cursor-pointer transition">
+                        <div class="flex items-center space-x-3">
+                            <input type="radio" name="quiz-opt" value="${idx}" class="text-indigo-600 focus:ring-indigo-500">
+                            <span class="text-xs sm:text-sm font-medium text-slate-800">${opt}</span>
+                        </div>
+                    </label>
+                `;
+            });
+
+            body.innerHTML = `
+                <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm font-semibold text-slate-900 leading-relaxed">
+                    ${currentQuizIndex + 1}. ${q.q}
+                </div>
+                <div class="space-y-2">
+                    ${optionsHtml}
+                </div>
+                <div class="pt-4 flex justify-end">
+                    <button onclick="submitQuizAnswer()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-6 py-3 rounded-xl transition shadow-md">
+                        ${currentQuizIndex === questions.length - 1 ? 'Selesai & Lihat Skor' : 'Jawab & Lanjut'} <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            `;
+        }
+
+        function submitQuizAnswer() {
+            const selected = document.querySelector('input[name="quiz-opt"]:checked');
+            if (!selected) {
+                alert("Silakan pilih salah satu jawaban terlebih dahulu!");
+                return;
+            }
+
+            const chosen = parseInt(selected.value);
+            currentQuizAnswers.push(chosen);
+
+            const questions = quizBank[currentQuizKey];
+            if (currentQuizIndex < questions.length - 1) {
+                currentQuizIndex++;
+                renderQuizQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            const questions = quizBank[currentQuizKey];
+            let correctCount = 0;
+
+            let reviewHtml = '';
+            questions.forEach((q, idx) => {
+                const userAns = currentQuizAnswers[idx];
+                const isCorrect = (userAns === q.a);
+                if (isCorrect) correctCount++;
+
+                reviewHtml += `
+                    <div class="p-4 rounded-2xl border ${isCorrect ? 'border-emerald-200 bg-emerald-50/50' : 'border-rose-200 bg-rose-50/50'} space-y-1.5 text-xs">
+                        <div class="flex justify-between font-bold">
+                            <span class="${isCorrect ? 'text-emerald-800' : 'text-rose-800'}">Soal ${idx + 1}: ${isCorrect ? 'BENAR ✅' : 'SALAH ❌'}</span>
+                            <span>Jawaban Anda: ${q.o[userAns]}</span>
+                        </div>
+                        <p class="text-slate-700"><strong>Kunci Jawaban:</strong> ${q.o[q.a]}</p>
+                        <p class="text-slate-600 italic">💡 Pembahasan: ${q.exp}</p>
+                    </div>
+                `;
+            });
+
+            const score = Math.round((correctCount / questions.length) * 100);
+            if (currentQuizKey !== 'evaluasi') {
+                state.scores[currentQuizKey] = score;
+                saveState();
+            }
+
+            const body = document.getElementById('quiz-body');
+            body.innerHTML = `
+                <div class="text-center py-6 space-y-3">
+                    <div class="w-16 h-16 ${score >= 70 ? 'bg-emerald-100 text-emerald-600' : 'bg-amber-100 text-amber-600'} rounded-full flex items-center justify-center text-3xl mx-auto">
+                        <i class="fa-solid ${score >= 70 ? 'fa-award' : 'fa-graduation-cap'}"></i>
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-slate-900">Hasil Kuis Anda</h3>
+                    <p class="text-4xl font-black ${score >= 70 ? 'text-emerald-600' : 'text-amber-600'}">${score} / 100</p>
+                    <p class="text-xs text-slate-500">Anda menjawab ${correctCount} dari ${questions.length} soal dengan benar.</p>
+                </div>
+
+                <div class="space-y-3 pt-4 border-t border-slate-100">
+                    <h4 class="font-bold text-xs text-slate-800 uppercase tracking-wider">Kunci Jawaban & Pembahasan Detail</h4>
+                    ${reviewHtml}
+                </div>
+
+                <div class="pt-4 flex justify-center">
+                    <button onclick="loadQuiz('${currentQuizKey}')" class="bg-indigo-600 text-white text-xs font-bold px-6 py-3 rounded-xl hover:bg-indigo-700 transition">
+                        <i class="fa-solid fa-rotate-right mr-1.5"></i> Coba Kuis Lagi
+                    </button>
+                </div>
+            `;
+        }
+
+        /* REFLECTION FORM LOGIC */
+        function saveReflection(e) {
+            e.preventDefault();
+            const name = document.getElementById('refl-student-name').value;
+            const topic = document.getElementById('refl-favorite-topic').value;
+            const notes = document.getElementById('refl-notes').value;
+
+            const reflData = { name, topic, notes, date: new Date().toLocaleDateString() };
+            localStorage.setItem('info_cerdas_reflection', JSON.stringify(reflData));
+
+            document.getElementById('refl-saved-msg').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('refl-saved-msg').classList.add('hidden');
+            }, 4000);
+        }
+
+        // Initialize quiz default view on load
+        loadQuiz('bab2');
+    </script>
+</body>
+</html>
